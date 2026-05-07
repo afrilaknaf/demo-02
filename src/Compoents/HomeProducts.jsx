@@ -36,7 +36,9 @@ export default function HomeProducts() {
                                     <button className="w-9 h-9 text-xl block lg:hidden rounded-full border absolute top-45 end-0 mr-5"><i class="ri-eye-line"></i></button>
                                     <button className="w-9 h-9 text-xl block lg:hidden bg-[#C91F28] text-white rounded-full border absolute top-55 mt-3 end-0 mr-5"><i class="ri-shopping-cart-2-line"></i></button>
                                     <div className="w-full h-full  bg-black lg:group-hover:bg-black/10">
-                                        <button className="w-[100px] h-[30px] opacity-0 lg:group-hover:opacity-100 transition-all duration-300 border bg-white text-black rounded-2xl absolute top-36 left-28">
+                                        <button onClick={()=>{
+                                            navigate(`/quick/${item._id}`)
+                                        }} className="w-[100px] h-[30px] opacity-0 lg:group-hover:opacity-100 transition-all duration-300 border bg-white text-black rounded-2xl absolute top-36 left-28">
                                             Quick View
                                         </button>
                                         <button className="w-[100px] h-[30px] opacity-0 lg:group-hover:opacity-100 duration-300 bg-[#C91F28] text-white border rounded-2xl absolute top-45 start-28">Quick Add</button>

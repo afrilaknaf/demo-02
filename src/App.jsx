@@ -14,6 +14,7 @@ import Preimum from './Compoents/Preimum'
 import ScrollTop from './Compoents/scrollTop'
 import Blog from './Compoents/Blog'
 import BlogPage from './Pages/BlogPage'
+import QuickView from './Pages/QuickView'
 
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
           <Route path='/products' element={<Products />} />
           <Route path='/preimum' element={<Preimum/>} />
           <Route path='/blog/:id/:slug' element={<BlogPage/>}/>
+          <Route path='/quick/:id' element={<QuickView/>}/>
         </Routes>
         <Footer />
         <MobileMenu />

@@ -20,7 +20,7 @@ export default function BlogPage() {
                 <div className="w-full h-[250px] relative top-0">
                     <img src={data.data.image} alt="" className="w-full h-[250px] oberflow-hidden object-cover absolute top-0 " />
                     <div className="w-full  h-[250px] bg-black/60 flex justify-center items-center text-center absolute top-0 text-white">
-                        <h1 className="font-bold text-xl">{data.data.title}</h1>
+                        <h1 className="font-bold text-xl lg:text-3xl">{data.data.title}</h1>
                     </div>
                 </div>
 

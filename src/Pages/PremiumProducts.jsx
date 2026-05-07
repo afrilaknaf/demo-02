@@ -5,21 +5,23 @@ import {useNavigate} from "react-router-dom"
 export default function PremiumProducts(){
 
     const navigate = useNavigate()
-    const {data,isLoading,isError} = useGets(`products/get`,"products")
+    const {data,isLoading,isError} = useGets(`premium/get`,"premium_products")
 
     if(isLoading) return <Loading/>
 
     if(isError) return <h1>Something Wents Wrong !</h1>
 
-    const Wacthes = data.data.filter((item)=>(
-        item.category === "Premium Watch"
-    ))
+    console.log(data)
 
-    const slice_data = Wacthes.slice(0,4)
+    // const Wacthes = data.data.filter((item)=>(
+    //     item.category === "Premium Watch"
+    // ))
+
+    // const slice_data = Wacthes.slice(0,4)
 
     return(
         <>
-         <div className="w-full h-auto flex justify-center items-center flex-col mt-5">
+         {/* <div className="w-full h-auto flex justify-center items-center flex-col mt-5">
                         <h1 className="text-3xl font-bold text-center m-5">Preimum Wacthes </h1>
                         <p className="w-full md:w-[800px] p-3 text-center text-lg text-[#8c8c8c]">Crafted with precision and timeless elegance, this premium watch reflects the legacy of fine watchmaking. Designed for those who appreciate luxury in every second.Elevate your everyday style with a watch that speaks of class, power, and timeless sophistication.</p>
                     </div>
@@ -51,7 +53,7 @@ export default function PremiumProducts(){
                                 }
                             </div>
                         </>
-                    }
+                    } */}
         
                     <div className="flex justify-center items-center m-5"><button onClick={()=>navigate("/preimum")} className="text-center w-[150px] h-[40px] bg-black text-white rounded-lg">More Products</button></div>
         </>
