@@ -12,7 +12,7 @@ export default function BlogPage() {
 
     if (isError) return <h1>Something Went Wrong</h1>
 
-    console.log(data.data)
+    
 
     return (
         <>

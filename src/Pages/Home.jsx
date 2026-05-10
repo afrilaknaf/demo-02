@@ -5,7 +5,7 @@ import Cookies from "js-cookie"
 import CryptoJs from "crypto-js"
 import { useNavigate } from "react-router-dom"
 import HomeProducts from "../Compoents/HomeProducts"
-import PremiumProducts from "./PremiumProducts"
+import Preimum from '../Compoents/Preimum_Home'
 import Car from "../assets/Car.svg"
 import Gift from "../assets/Gift.svg"
 import Diamond from "../assets/Diamond.svg"
@@ -170,7 +170,8 @@ export default function Home() {
                 <img src="https://patek-res.cloudinary.com/dfsmedia/0906caea301d42b3b8bd23bd656d1711/6212-51883" alt="" className="w-full h-[600px] object-cover" />
             </div>
 
-            <PremiumProducts />
+            
+            <Preimum/>
 
 
 

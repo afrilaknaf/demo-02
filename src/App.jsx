@@ -10,19 +10,21 @@ import Products from './Pages/Products'
 import AOS from "aos"
 import "aos/dist/aos.css"
 import { useEffect } from "react"
-import Preimum from './Compoents/Preimum'
 import ScrollTop from './Compoents/scrollTop'
 import Blog from './Compoents/Blog'
 import BlogPage from './Pages/BlogPage'
-import QuickView from './Pages/QuickView'
+import QuickView from './Compoents/QuickView'
+import PremiumProducts from './Pages/PremiumProducts'
+import Carousel from './Compoents/carousel'
+import ProductsQuickview from './Compoents/ProductsQuickView'
 
 
 function App() {
 
   useEffect(() => {
     AOS.init({
-      duration: 1000, 
-      once: false      
+      duration: 1000,
+      once: false
     })
   }, [])
 
@@ -30,15 +32,17 @@ function App() {
     <>
       <div className='overflow-x-hidden'>
         <Navbar />
-        <ScrollTop/>
+        <ScrollTop />
         <Routes>
           <Route index element={<Home />} />
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<Signup />} />
           <Route path='/products' element={<Products />} />
-          <Route path='/preimum' element={<Preimum/>} />
-          <Route path='/blog/:id/:slug' element={<BlogPage/>}/>
-          <Route path='/quick/:id' element={<QuickView/>}/>
+          <Route path='/preimum' element={<PremiumProducts />} />
+          <Route path='/blog/:id/:slug' element={<BlogPage />} />
+          <Route path='/quick/:id' element={<QuickView />} />
+          <Route path="/carousel" element={<Carousel />} />
+          <Route path='/quick/products/:id' element={<ProductsQuickview/>}/>
         </Routes>
         <Footer />
         <MobileMenu />
