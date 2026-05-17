@@ -2,10 +2,15 @@ import useGets from "../Hooks/UseGet"
 import Loading from "../Compoents/Loading"
 import { useNavigate } from "react-router-dom"
 import useWishpost from "../Hooks/UseWishlistPost"
+import Cookies from "js-cookie"
+import { useState } from "react"
+import { toast, ToastContainer } from "react-toastify"
 
 export default function Products() {
 
     const navigate = useNavigate()
+    const [wishlist, setWishlist] = useState({})
+
     const mutation = useWishpost()
 
     const { isLoading, isError, data } = useGets(`products/get`, "products")
@@ -15,6 +20,24 @@ export default function Products() {
     if (isError) return <h1>Something Wents Wrong</h1>
 
     let watches = data.data.filter((item) => (item.category === "watch"));
+
+    function handlwishlist(product) {
+        const token = Cookies.get("User_Token")
+        if (token) {
+            setWishlist({
+                ...wishlist,
+                [product._id]: !wishlist[product._id]
+            })
+            const userid = Cookies.get("User_Details_id")
+            const productid = product._id
+            const Producttype = product.wacthes
+            const payload = { userId: userid, productId: productid, producttype: Producttype }
+            mutation.mutate(payload)
+        }
+        else {
+            toast.error("User is no login")
+        }
+    }
 
 
     return (
@@ -27,8 +50,14 @@ export default function Products() {
                             <img src={item.images} loading="lazy" className="w-full h-auto object-cover" alt="" />
                             <h1 className="font-bold">{item.title}</h1>
                             <h1 className="font-bold text-[#C91F28]">${item.price}</h1>
-                            <button className="w-9 h-9 hidden group-hover:block text-xl rounded-full border absolute top-0 mt-5 ml-2">
-                                <i className="ri-heart-line"></i>
+                            <button onClick={() => handlwishlist(item)} className="w-9 h-9 hidden group-hover:block text-xl rounded-full border absolute top-0 mt-5 ml-2">
+                                <i
+                                    className={
+                                        wishlist[item._id]
+                                            ? "ri-heart-fill text-red-500"
+                                            : "ri-heart-line text-black"
+                                    }
+                                ></i>
                             </button>
                             <button onClick={() => {
                                 navigate(`/quick/products/${item._id}`)
@@ -47,6 +76,7 @@ export default function Products() {
                     ))
                 }
             </div>
+            <ToastContainer />
         </>
     )
 }

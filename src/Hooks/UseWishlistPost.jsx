@@ -1,9 +1,11 @@
-import { useMutation } from "@tanstack/react-query"
+import { QueryClient, useMutation, useQueryClient } from "@tanstack/react-query"
 import { toast } from "react-toastify"
 
 const url = import.meta.env.VITE_URL
 
 export default function useWishpost() {
+
+    const queryclient =useQueryClient()
 
     return useMutation({
         mutationKey: "wishlist_add",
@@ -17,6 +19,7 @@ export default function useWishpost() {
         },
         onSuccess: (data) => {
             toast.success(data.msg)
+            queryclient.invalidateQueries(["get_wishlist"])
         },
 
         onError: () => {

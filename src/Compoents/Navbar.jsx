@@ -1,16 +1,41 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import Loading from "../Compoents/Loading"
+import useGets from "../Hooks/UseGet"
+import Cookies from "js-cookie"
 
 export default function Navbar() {
 
     const navigate = useNavigate()
     let [nav, setNav] = useState(false)
 
+    const { data, isLoading, isError } = useGets("wishlist/get","getwishlist")
+
+
+    const userid = Cookies.get("User_Details_id")
+
+    if (!userid) {
+        return console.error("Please Login user")
+    }
+
+    if (isLoading) {
+        return console.warn("Please Wait")
+    }
+
+    if (isError) return console.log("Something wents Wrong")
+
+    const array = data.data
+
+    const User_Details_id = array?.filter((item) => {
+        return userid === item.userId
+    })
+
+
     return (
         <>
 
             <div className="w-full h-12 max-sm:h-22 max-sm:flex-col max-md:h-22 max-md:flex-col max-lg:h-22 max-lg:flex-col  bg-[#293341] text-white flex justify-between max-sm:justify-center max-md:justify-center max-lg:justify-center items-center px-4">
-                
+
                 <ul className="flex gap-4 block max-sm:hidden max-md:hidden max-lg:hidden  z-10">
                     <li><i class="ri-phone-line"></i>&nbsp;<a className="hover:text-[#C91F28] transition-all" href="telno:+9188888912567">+9188888912567</a></li>
                     <li><i class="ri-mail-line"></i>&nbsp;<a className="hover:text-[#C91F28] transition-all" href="mailto:kalleson@gmail.com">kalleson@gmail.com</a></li>
@@ -36,10 +61,10 @@ export default function Navbar() {
                     <h1 className="text-3xl font-extrabold">Kalles</h1>
 
                     <ul className="flex gap-5 mt-4 block max-sm:hidden max-md:hidden max-lg:hidden">
-                        <li onClick={()=>navigate("/")} className="text-[18px] font-normal hover:text-[#C91F28] transition-all">Home</li>
-                        <li onClick={()=>navigate("/products")} className="text-[18px] font-normal hover:text-[#C91F28] transition-all">Products</li>
+                        <li onClick={() => navigate("/")} className="text-[18px] font-normal hover:text-[#C91F28] transition-all">Home</li>
+                        <li onClick={() => navigate("/products")} className="text-[18px] font-normal hover:text-[#C91F28] transition-all">Products</li>
                         <li className="text-[18px] font-normal hover:text-[#C91F28] transition-all">Sale</li>
-                        <li onClick={()=>navigate("/blog")} className="text-[18px] font-normal hover:text-[#C91F28] transition-all">Blog</li>
+                        <li onClick={() => navigate("/blog")} className="text-[18px] font-normal hover:text-[#C91F28] transition-all">Blog</li>
                         <li className="text-[18px] font-normal hover:text-[#C91F28] transition-all">Contact</li>
                     </ul>
 
@@ -48,7 +73,9 @@ export default function Navbar() {
                         <li onClick={() => {
                             navigate("/login")
                         }} className="text-[25px] hover:text-[#C91F28] transition-all block max-sm:hidden max-md:hidden"><i class="ri-user-line"></i></li>
-                        <li className="text-[25px] hover:text-[#C91F28] transition-all block max-sm:hidden max-md:hidden relative top-0"><i class="ri-heart-line"></i><span className="w-[20px] h-[20px] absolute top-[-3px] end-[-10px] bg-black text-white rounded-full text-center text-sm">0</span></li>
+                        <li onClick={() => {
+                            navigate("/wishlist")
+                        }} className="text-[25px] hover:text-[#C91F28] transition-all block max-sm:hidden max-md:hidden relative top-0"><i class="ri-heart-line"></i><span className="w-[20px] h-[20px] absolute top-[-3px] end-[-10px] bg-black text-white rounded-full text-center text-sm">{User_Details_id.length}</span></li>
                         <li className="text-[25px] hover:text-[#C91F28] transition-all relative top-0"><i class="ri-shopping-cart-2-line"></i><span className="w-[20px] h-[20px] absolute top-[-3px] end-[-10px] bg-black text-white rounded-full text-center text-sm">0</span></li>
                     </ul>
 
