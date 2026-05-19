@@ -2,27 +2,43 @@ import Loading from "../Compoents/Loading"
 import useGets from "../Hooks/UseGet"
 import Cookies from "js-cookie"
 
-export default function Wishlist(){
+export default function Wishlist() {
 
-    const {data,isLoading,isError}=useGets("wishlist/get","get_wishlist")
+  const { data, isLoading, isError } = useGets(`wishlist/getdata`)
 
-    if(isLoading) return <Loading/>
-    
-    if(isError) return <h1>Something wents Wrong</h1>
+  if (isLoading) return <Loading />
 
-    const array = data.data
+  if (isError) return <h1>Something went Wrong</h1>
 
-    const userid = Cookies.get("User_Details_id")
-    
-    const User_Details_id = array?.filter((item)=>{
-      return  userid === item.userId
-    })
+  const userids = Cookies.get("User_Details_id")
 
-    console.log(User_Details_id)
+  const userid = data.data.filter((item) => {
+    return item.userId === userids && item.productId !== null
+  })
 
-    return(
-        <>
-        <h1>Wishlist</h1>
-        </>
-    )
+  const normal = userid.filter((item) => {
+    return item.productId.wacthes === "normal"
+  })
+
+  const premium = userid.filter((item) => {
+    return item.productId.wacthes === "premium"
+  })
+
+  console.log("userid", userid)
+  console.log("normal", normal)
+  console.log("premium", premium)
+
+  return (
+    <>
+      <h1>Wishlist</h1>
+
+      {userid.map((item) => (
+        <div key={item._id}>
+          <h2>{item.productId.title}</h2>
+          <p>{item.productId.price}</p>
+          <img src={item.productId.images?.[0]} width="150" />
+        </div>
+      ))}
+    </>
+  )
 }

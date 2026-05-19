@@ -31,7 +31,8 @@ export default function Products() {
             const userid = Cookies.get("User_Details_id")
             const productid = product._id
             const Producttype = product.wacthes
-            const payload = { userId: userid, productId: productid, producttype: Producttype }
+            const productModel = product.productModel
+            const payload = { userId: userid, productId: productid, producttype: Producttype,productModel:productModel }
             mutation.mutate(payload)
         }
         else {

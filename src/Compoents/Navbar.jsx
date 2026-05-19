@@ -15,7 +15,7 @@ export default function Navbar() {
     const userid = Cookies.get("User_Details_id")
 
     if (!userid) {
-        return console.error("Please Login user")
+         console.error("Please Login user")
     }
 
     if (isLoading) {
