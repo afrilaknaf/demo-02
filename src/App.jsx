@@ -18,6 +18,7 @@ import PremiumProducts from './Pages/PremiumProducts'
 import Carousel from './Compoents/carousel'
 import ProductsQuickview from './Compoents/ProductsQuickView'
 import Wishlist from './Pages/wishlist'
+import Cart from './Pages/cart'
 
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
           <Route path="/carousel" element={<Carousel />} />
           <Route path='/quick/products/:id' element={<ProductsQuickview/>}/>
           <Route path='/wishlist' element={<Wishlist/>} />
+          <Route path='/cart' element={<Cart/>}/>
         </Routes>
         <Footer />
         <MobileMenu />

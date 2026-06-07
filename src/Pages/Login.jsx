@@ -1,11 +1,12 @@
 import { useRef } from "react"
 import { toast, ToastContainer } from "react-toastify"
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useNavigate } from "react-router-dom"
 import Cookies from "js-cookie";
 
 export default function Login() {
 
+    const queryclient = useQueryClient()
     const email = useRef("")
     const password = useRef("")
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -23,8 +24,10 @@ export default function Login() {
             return await res.json()
         },
         onSuccess:(data)=>{
+            queryclient.invalidateQueries(["get_wishlist"])
             toast.success(data.msg)
             Cookies.set("User_Token",data.token,{expires:1})
+            sessionStorage.setItem("Reload",true)
             email.current.value=""
             password.current.value=""
             setTimeout(()=>{

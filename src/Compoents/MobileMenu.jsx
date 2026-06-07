@@ -17,7 +17,9 @@ export default function MobileMenu() {
                         <span><i class="ri-heart-line"></i></span>
                         <h1 className="text-sm">Wishlist</h1>
                     </div>
-                    <div className="flex flex-col gap-0 items-center text-center">
+                    <div onClick={()=>{
+                        navigate("/cart")
+                    }} className="flex flex-col gap-0 items-center text-center">
                         <span><i class="ri-shopping-cart-2-line"></i></span>
                         <h1 className="text-sm">Cart</h1>
                     </div>

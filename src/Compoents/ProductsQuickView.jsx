@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom"
 import useGets from "../Hooks/UseGet"
 import Loading from "./Loading"
 
+
 export default function ProductsQuickview(){
 
     const datas = useParams()
@@ -9,10 +10,12 @@ export default function ProductsQuickview(){
 
     let {data,isLoading,isError} = useGets(`products/quick/${id}`,'Products_quick')
 
+
     if(isLoading) return <Loading/>
 
     if(isError) return <h1>Something Wents Wrong</h1>
     const msg = data.data
+
 
     return(
         <>

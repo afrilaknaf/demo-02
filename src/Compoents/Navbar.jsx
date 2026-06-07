@@ -9,14 +9,10 @@ export default function Navbar() {
     const navigate = useNavigate()
     let [nav, setNav] = useState(false)
 
-    const { data, isLoading, isError } = useGets("wishlist/get","getwishlist")
-
+    const { data: wishdata, isLoading, isError } = useGets("wishlist/get", "getwishlist")
+    const { data: cartdata } = useGets("cart/get_data", "cart_get_data")
 
     const userid = Cookies.get("User_Details_id")
-
-    if (!userid) {
-         console.error("Please Login user")
-    }
 
     if (isLoading) {
         return console.warn("Please Wait")
@@ -24,11 +20,19 @@ export default function Navbar() {
 
     if (isError) return console.log("Something wents Wrong")
 
-    const array = data.data
+    const array = wishdata?.data ?? []
+    const cartarray = cartdata?.data ?? []
 
-    const User_Details_id = array?.filter((item) => {
-        return userid === item.userId
-    })
+    const User_Details_id = userid
+        ? array.filter((item) => userid === item.userId)
+        : []
+
+    const user_cart_id = userid
+        ? cartarray.filter((item) => userid === item.userId)
+        : []
+
+    const wishlist_count = User_Details_id.length
+    const cart_count = user_cart_id.length
 
 
     return (
@@ -75,13 +79,13 @@ export default function Navbar() {
                         }} className="text-[25px] hover:text-[#C91F28] transition-all block max-sm:hidden max-md:hidden"><i class="ri-user-line"></i></li>
                         <li onClick={() => {
                             navigate("/wishlist")
-                        }} className="text-[25px] hover:text-[#C91F28] transition-all block max-sm:hidden max-md:hidden relative top-0"><i class="ri-heart-line"></i><span className="w-[20px] h-[20px] absolute top-[-3px] end-[-10px] bg-black text-white rounded-full text-center text-sm">{User_Details_id.length}</span></li>
-                        <li className="text-[25px] hover:text-[#C91F28] transition-all relative top-0"><i class="ri-shopping-cart-2-line"></i><span className="w-[20px] h-[20px] absolute top-[-3px] end-[-10px] bg-black text-white rounded-full text-center text-sm">0</span></li>
+                        }} className="text-[25px] hover:text-[#C91F28] transition-all block max-sm:hidden max-md:hidden relative top-0"><i class="ri-heart-line"></i><span className="w-[20px] h-[20px] absolute top-[-3px] end-[-10px] bg-black text-white rounded-full text-center text-sm">{wishlist_count}</span></li>
+                        <li onClick={() => {
+                            navigate("/cart")
+                        }} className="text-[25px] hover:text-[#C91F28] transition-all relative top-0"><i class="ri-shopping-cart-2-line"></i><span className="w-[20px] h-[20px] absolute top-[-3px] end-[-10px] bg-black text-white rounded-full text-center text-sm">{cart_count}</span></li>
                     </ul>
-
                 </div>
             </div>
-
 
             {
                 nav && <div onClick={() => {

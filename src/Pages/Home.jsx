@@ -20,6 +20,7 @@ export default function Home() {
 
 
 
+
     const navigate = useNavigate()
     let obj = [{ name: "vi", srcs: Videos }, { name: "im", srcs: banner }]
     let [change, setChange] = useState(obj[0])
@@ -60,11 +61,19 @@ export default function Home() {
 
     useEffect(() => {
 
-        if (!token) {
-            toast.error("Please Login!")
-            return
+        const reloads = sessionStorage.getItem("Reload")
+        if (reloads) {
+            setTimeout(() => {
+                sessionStorage.removeItem("Reload")
+                window.location.reload()
+                return
+            }, 2000)
         }
 
+        if (!token) {
+            // toast.error("Please Login!")
+            return
+        }
         fetch(`${url}api/profile`, {
             method: "GET",
             headers: { "Authorization": `Bearer ${token}`, "Content-type": "application/json" }
@@ -83,7 +92,7 @@ export default function Home() {
 
 
 
-  
+
 
 
 
@@ -170,8 +179,8 @@ export default function Home() {
                 <img src="https://patek-res.cloudinary.com/dfsmedia/0906caea301d42b3b8bd23bd656d1711/6212-51883" alt="" className="w-full h-[600px] object-cover" />
             </div>
 
-            
-            <Preimum/>
+
+            <Preimum />
 
 
 
@@ -199,7 +208,7 @@ export default function Home() {
                 <h1 className="text-3xl font-bold">Latest From Our Blog</h1>
                 <p className="text-lg text-[#8c8c8c] my-5">The freshest and most exciting news</p>
 
-                <Blog/>
+                <Blog />
             </div>
         </>
     )
