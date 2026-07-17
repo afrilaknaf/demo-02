@@ -37,6 +37,7 @@ const premiumProducts = data_cart.filter(
     return (
         <>
             <h1>{normalProducts.length}</h1>
+            <h1>{premiumProducts.length}</h1>
         </>
     )
 }

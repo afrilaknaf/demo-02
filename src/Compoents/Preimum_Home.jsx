@@ -32,29 +32,22 @@ export default function Preimum() {
     const wacthes = data.data.slice(0, 4)
 
     function handlwishlist(product) {
-
         const token = Cookies.get("User_Token")
-
-        if (!token) {
+        if (token) {
+            setWishlist({
+                ...wishlist,
+                [product._id]: !wishlist[product._id]
+            })
+            const userid = Cookies.get("User_Details_id")
+            const productid = product._id
+            const Producttype = product.wacthes
+            const productModel = product.productModel
+            const payload = { userId: userid, productId: productid, producttype: Producttype, productModel: productModel }
+            mutation.mutate(payload)
+        }
+        else {
             toast.error("User is no login")
-            return
         }
-
-        setWishlist({
-            ...wishlist,
-            [product._id]: !wishlist[product._id]
-        })
-
-        const userid = Cookies.get("User_Details_id")
-
-        const payload = {
-            userId: userid,
-            productId: product._id,
-            producttype: product.productModel,
-            productModel:product.wacthes 
-        }
-
-        mutation.mutate(payload)
     }
 
 
