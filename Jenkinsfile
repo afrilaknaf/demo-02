@@ -45,7 +45,7 @@ pipeline{
             steps{
                 bat '''
                 echo Check the dist folder
-                if not exist -d dist (
+                if not exist dist (
                     echo No file exist like dist
                     exit /b 1
                 )
@@ -64,9 +64,15 @@ pipeline{
 
         stage("Data saved in Artifacts"){
             steps{
-                archiveArtifacts artifacts: 'dist/**'
+                archiveArtifacts(
+                    artifacts : 'dist/**',
+                    fingerprint : true
+                )
             }
         }
+
+
+    }
 
 
     post{
@@ -76,7 +82,5 @@ pipeline{
         failure{
             bat "echo If one build fail i will run"
         }
-    }
-
     }
 }
